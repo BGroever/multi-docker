@@ -1,0 +1,24 @@
+sudo: require
+services:
+  - docker
+
+before_install:
+  - docker build -t bengroever/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run bengroever/react-test npm test -- --coverage
+
+after_sucess:
+  - docker build -t bengroever/multi-client ./client
+  - docker build -t bengroever/multi-nginx ./nginx 
+  - docker build -t bengroever/multi-server ./server 
+  - docker build -t bengroever/multi-worker ./worker
+
+# Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+# Take those images and push them to docker hub
+  - docker push bengroever/multi-client
+  - docker push bengroever/multi-nginx
+  - docker push bengroever/multi-server
+  - docker push bengroever/multi-worker
