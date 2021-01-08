@@ -15,12 +15,9 @@ after_success:
   - docker build -t bengroever/multi-nginx ./nginx 
   - docker build -t bengroever/multi-server ./server 
   - docker build -t bengroever/multi-worker ./worker
-
-# Log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
-# Take those images and push them to docker hub
   - docker push bengroever/multi-client
   - docker push bengroever/multi-nginx
   - docker push bengroever/multi-server
   - docker push bengroever/multi-worker
+  - docker push bengroever/multi-client
