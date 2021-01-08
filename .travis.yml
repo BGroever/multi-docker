@@ -20,4 +20,3 @@ after_success:
   - docker push bengroever/multi-nginx
   - docker push bengroever/multi-server
   - docker push bengroever/multi-worker
-  - docker push bengroever/multi-client
